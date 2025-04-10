@@ -3,541 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Ventas - Abarrotes Sarita</title>
-    <style>
-        /* Estilos generales */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #e0e0e0;
-            overflow: hidden;
-        }
-        
-        /* Estilos del encabezado */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #666666;
-            padding: 5px 15px;
-            color: white;
-            height: 50px;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo {
-            width: 150px;
-            height: 50px;
-            background-color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-        }
-        
-        .logo img {
-            max-width: 90%;
-            max-height: 90%;
-        }
-        
-        .cart-icon {
-            font-size: 28px;
-            color: #00e6e6;
-            margin-right: 10px;
-        }
-        
-        .menu-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        
-        .user-section {
-            display: flex;
-            align-items: center;
-        }
-        
-        .function-title {
-            margin-right: 20px;
-            font-size: 16px;
-        }
-        
-        .user-icon {
-            font-size: 24px;
-            background-color: #000;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-        
-        /* Estilos de la barra lateral */
-        .sidebar {
-            width: 180px;
-            background-color: white;
-            height: calc(100vh - 90px);
-            float: left;
-        }
-        
-        .menu-item {
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #e0e0e0;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .menu-item:hover {
-            background-color: #f5f5f5;
-        }
-        
-        .menu-item.active {
-            background-color: #ff66cc;
-            color: white;
-        }
-        
-        .menu-icon {
-            font-size: 22px;
-            margin-right: 15px;
-            width: 24px;
-            text-align: center;
-        }
-        
-        /* Estilos del contenido principal */
-        .main-content {
-            margin-left: 180px;
-            padding: 15px;
-            height: calc(100vh - 90px);
-            overflow-y: auto;
-        }
-        
-        .form-row {
-            display: flex;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-        
-        .form-label {
-            min-width: 80px;
-            font-weight: bold;
-        }
-        
-        .form-input, .form-select {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        
-        .form-select {
-            min-width: 200px;
-        }
-        
-        .form-right {
-            margin-left: auto;
-        }
-        
-        .btn {
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-        
-        .btn:hover {
-            background-color: #e0e0e0;
-        }
-        
-        .actions {
-            display: flex;
-            margin: 15px 0;
-        }
-        
-        .btn-action {
-            display: flex;
-            align-items: center;
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
-            padding: 5px 15px;
-            margin-right: 10px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-        
-        .btn-action:hover {
-            background-color: #e0e0e0;
-        }
-        
-        .plus-icon {
-            font-size: 18px;
-            margin-right: 5px;
-        }
-        
-        /* Estilos de la tabla */
-        .products-table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-        }
-        
-        .products-table th, .products-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        
-        .products-table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        
-        .products-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .products-table tr:hover {
-            background-color: #f1f1f1;
-        }
-        
-        .checkbox {
-            text-align: center;
-        }
-        
-        /* Estilos del footer */
-        .footer {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-top: 20px;
-            padding: 10px 0;
-        }
-        
-        .total-label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        .total-input {
-            width: 100px;
-            padding: 5px;
-            text-align: right;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            margin-right: 15px;
-        }
-        
-        .btn-save {
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
-            padding: 5px 15px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-        
-        .btn-save:hover {
-            background-color: #e0e0e0;
-        }
-        
-        /* Estilos de la barra de Windows */
-        .windows-bar {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 40px;
-            background-color: #333;
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            color: white;
-        }
-        
-        .win-icon {
-            font-size: 20px;
-            margin: 0 8px;
-            cursor: pointer;
-        }
-        
-        .search-container {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            border-radius: 3px;
-            padding: 3px 10px;
-            margin: 0 10px;
-            color: #333;
-        }
-        
-        .search-icon {
-            margin-right: 5px;
-        }
-        
-        .search-text {
-            border: none;
-            outline: none;
-            width: 150px;
-        }
-        
-        .taskbar-right {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-        }
-        
-        .time-display {
-            margin-right: 15px;
-            font-size: 14px;
-        }
-    </style>
+    <title>Abarrotes Modernos - Sistema de Ventas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Encabezado con logo y título -->
-    <div class="header">
-        <div class="logo-container">
-            <div class="logo">
-                <img src="#" alt="ABARROTES SARITA">
+    <div class="container">
+        <header class="header">
+            <h1>Abarrotes Modernos</h1>
+            <div class="user-info">
+                <span>Usuario: Admin</span>
+                <button class="logout-btn">Cerrar sesión</button>
             </div>
-            <div class="cart-icon">🛒</div>
-            <div class="menu-title">VENTAS</div>
-        </div>
-        <div class="user-section">
-            <div class="function-title">Realizar Venta</div>
-            <div class="user-icon">👤</div>
-            <div>sarita</div>
+        </header>
+
+        <nav class="sidebar">
+            <ul>
+                <li class="active" data-section="dashboard"><i class="fas fa-home"></i> Inicio</li>
+                <li data-section="ventas"><i class="fas fa-cash-register"></i> Ventas</li>
+                <li data-section="compras"><i class="fas fa-shopping-cart"></i> Compras</li>
+                <li data-section="productos"><i class="fas fa-box-open"></i> Productos</li>
+                <li data-section="proveedores"><i class="fas fa-truck"></i> Proveedores</li>
+                <li data-section="clientes"><i class="fas fa-users"></i> Clientes</li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Sección de Dashboard -->
+            <section id="dashboard" class="content-section active">
+                <h2>Panel Principal</h2>
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3>Ventas Hoy</h3>
+                        <p>$12,450.00</p>
+                    </div>
+                    <div class="card">
+                        <h3>Productos</h3>
+                        <p>128</p>
+                    </div>
+                    <div class="card">
+                        <h3>Clientes</h3>
+                        <p>42</p>
+                    </div>
+                    <div class="card">
+                        <h3>Proveedores</h3>
+                        <p>15</p>
+                    </div>
+                </div>
+                <div class="recent-activity">
+                    <h3>Actividad Reciente</h3>
+                    <ul>
+                        <li>Venta realizada - $1,250.00</li>
+                        <li>Nuevo producto agregado: Leche Lala 1L</li>
+                        <li>Compra registrada a Proveedor: Alimentos S.A.</li>
+                        <li>Nuevo cliente registrado: Juan Pérez</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Sección de Ventas -->
+            <section id="ventas" class="content-section">
+                <div class="section-header">
+                    <h2>Ventas</h2>
+                    <button class="add-btn" id="add-venta-btn">Nueva Venta</button>
+                </div>
+                <div class="crud-container">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar venta...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1001</td>
+                                <td>10/04/2023</td>
+                                <td>Juan Pérez</td>
+                                <td>$450.00</td>
+                                <td>
+                                    <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <!-- Más filas de datos -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección de Compras -->
+            <section id="compras" class="content-section">
+                <div class="section-header">
+                    <h2>Compras</h2>
+                    <button class="add-btn" id="add-compra-btn">Nueva Compra</button>
+                </div>
+                <div class="crud-container">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar compra...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Proveedor</th>
+                                <th>Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2001</td>
+                                <td>09/04/2023</td>
+                                <td>Alimentos S.A.</td>
+                                <td>$1,250.00</td>
+                                <td>
+                                    <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <!-- Más filas de datos -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección de Productos -->
+            <section id="productos" class="content-section">
+                <div class="section-header">
+                    <h2>Productos</h2>
+                    <button class="add-btn" id="add-producto-btn">Nuevo Producto</button>
+                </div>
+                <div class="crud-container">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar producto...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Existencia</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PRD001</td>
+                                <td>Leche Lala 1L</td>
+                                <td>Lácteos</td>
+                                <td>$25.00</td>
+                                <td>24</td>
+                                <td>
+                                    <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <!-- Más filas de datos -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección de Proveedores -->
+            <section id="proveedores" class="content-section">
+                <div class="section-header">
+                    <h2>Proveedores</h2>
+                    <button class="add-btn" id="add-proveedor-btn">Nuevo Proveedor</button>
+                </div>
+                <div class="crud-container">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar proveedor...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Contacto</th>
+                                <th>Teléfono</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PROV001</td>
+                                <td>Alimentos S.A.</td>
+                                <td>Juan López</td>
+                                <td>555-123-4567</td>
+                                <td>
+                                    <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <!-- Más filas de datos -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección de Clientes -->
+            <section id="clientes" class="content-section">
+                <div class="section-header">
+                    <h2>Clientes</h2>
+                    <button class="add-btn" id="add-cliente-btn">Nuevo Cliente</button>
+                </div>
+                <div class="crud-container">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar cliente...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CLI001</td>
+                                <td>Juan Pérez</td>
+                                <td>555-987-6543</td>
+                                <td>juan@example.com</td>
+                                <td>
+                                    <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <!-- Más filas de datos -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal genérico -->
+    <div class="modal" id="generic-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title">Título del Modal</h2>
+            <form id="modal-form">
+                <!-- Los campos del formulario se insertarán dinámicamente aquí -->
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn">Cancelar</button>
+                    <button type="submit" class="save-btn">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <!-- Barra lateral con menú -->
-    <div class="sidebar">
-        <div class="menu-item active">
-            <div class="menu-icon">🛒</div>
-            <div>VENTAS</div>
-        </div>
-        <div class="menu-item">
-            <div class="menu-icon">🛍️</div>
-            <div>COMPRAS</div>
-        </div>
-        <div class="menu-item">
-            <div class="menu-icon">📦</div>
-            <div>PRODUCTOS</div>
-        </div>
-        <div class="menu-item">
-            <div class="menu-icon">🚚</div>
-            <div>PROVEEDORES</div>
-        </div>
-        <div class="menu-item">
-            <div class="menu-icon">👥</div>
-            <div>CLIENTES</div>
-        </div>
-    </div>
-    
-    <!-- Contenido principal -->
-    <div class="main-content">
-        <!-- Formulario de venta -->
-        <div class="form-row">
-            <div class="form-label">FECHA:</div>
-            <input type="text" class="form-input" value="07/04/2025 13:00:53">
-            <div class="form-right">
-                <button class="btn">Limpiar</button>
-            </div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-label">CLIENTE:</div>
-            <select class="form-select">
-                <option>CLIENTES USUALES</option>
-            </select>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-label">BUSCAR:</div>
-            <input type="text" class="form-input" style="width: 300px;">
-        </div>
-        
-        <!-- Botones de acción -->
-        <div class="actions">
-            <button class="btn-action">
-                <span class="plus-icon">+</span>
-                Nueva Venta
-            </button>
-            <button class="btn-action">
-                <span class="plus-icon">+</span>
-                Añadir Producto
-            </button>
-        </div>
-        
-        <!-- Tabla de productos -->
-        <table class="products-table">
-            <thead>
-                <tr>
-                    <th width="5%"></th>
-                    <th width="15%">CODIGO</th>
-                    <th width="8%">CANT</th>
-                    <th width="40%">DESCRIPCION</th>
-                    <th width="5%">T</th>
-                    <th width="12%">PRECIO</th>
-                    <th width="12%">TOTAL</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td>7750243045091</td>
-                    <td>2</td>
-                    <td>MAYONESA ALACENA 95G</td>
-                    <td class="checkbox">☑</td>
-                    <td>3.5</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7753842</td>
-                    <td>1.00</td>
-                    <td>PALL MALL XL AZUL X20UNID</td>
-                    <td class="checkbox">☑</td>
-                    <td>15</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7750243051187</td>
-                    <td>2</td>
-                    <td>CORBATA CHICA NICOLINI 250G</td>
-                    <td class="checkbox">☑</td>
-                    <td>1.5</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7750670020411</td>
-                    <td>1.00</td>
-                    <td>AGUA CIELO CON GAS 625ML</td>
-                    <td class="checkbox">☑</td>
-                    <td>1.2</td>
-                    <td>1.2</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7750670004329</td>
-                    <td>1.00</td>
-                    <td>SPORADE BLUEBERRY 500ML</td>
-                    <td class="checkbox">☑</td>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7441005011999</td>
-                    <td>1.00</td>
-                    <td>PILA PANASONIC D X PAR</td>
-                    <td class="checkbox">☑</td>
-                    <td>5</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7754487002691</td>
-                    <td>1.00</td>
-                    <td>AJINOMEN GALLINA PICANTE 80G</td>
-                    <td class="checkbox">☑</td>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7750182003827</td>
-                    <td>1.00</td>
-                    <td>COCA COLA 300ML</td>
-                    <td class="checkbox">☑</td>
-                    <td>1.8</td>
-                    <td>1.8</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7750670244954</td>
-                    <td>3</td>
-                    <td>CIELO 625ML</td>
-                    <td class="checkbox">☑</td>
-                    <td>1</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>▶</td>
-                    <td>7751731001646</td>
-                    <td>1.00</td>
-                    <td>AGUA CIELO 1L CHUPON</td>
-                    <td class="checkbox">☑</td>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7750182007757</td>
-                    <td>3</td>
-                    <td>SAN LUIS MANZANA CON GAS 625ML</td>
-                    <td class="checkbox">☑</td>
-                    <td>1.8</td>
-                    <td>5.4</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7613033140242</td>
-                    <td>1.00</td>
-                    <td>DONOFRIO BOMBONES 75.3G</td>
-                    <td class="checkbox">☑</td>
-                    <td>4.5</td>
-                    <td>4.5</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>7613287056313</td>
-                    <td>1.00</td>
-                    <td>COPA K-BANA 58.1G</td>
-                    <td class="checkbox">☑</td>
-                    <td>2.5</td>
-                    <td>2.5</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <!-- Footer con total -->
-        <div class="footer">
-            <div class="total-label">TOTAL:</div>
-            <input type="text" class="total-input" value="53.2">
-            <button class="btn-save">Guardar</button>
-        </div>
-    </div>
-    
-    <!-- Barra de Windows -->
-    <div class="windows-bar">
-        <div class="win-icon">🪟</div>
-        <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <span>Buscar</span>
-        </div>
-        <div class="win-icon">✨</div>
-        <div class="win-icon">📂</div>
-        <div class="win-icon">🌐</div>
-        <div class="win-icon">☁️</div>
-        <div class="win-icon">📱</div>
-        <div class="win-icon">🛒</div>
-        <div class="win-icon">🍕</div>
-        <div class="taskbar-right">
-            <div class="time-display">13:00 7/4/2025</div>
-            <div class="win-icon">💬</div>
-        </div>
-    </div>
+
+    <script src="main.js"></script>
 </body>
 </html>
